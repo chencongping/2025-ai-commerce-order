@@ -1,0 +1,11 @@
+{
+  "files": [
+    "pom.xml"
+  ],
+  "variables": {
+    "__REPO_NAME__": {
+      "description": "Repository name",
+      "type": "string"
+    }
+  }
+}

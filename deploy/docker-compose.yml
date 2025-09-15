@@ -1,0 +1,36 @@
+services:
+  app:
+    build: ../
+    container_name: ${APP_NAME}
+    labels:
+      metrics: "${METRICS}"
+      app: "${PROJECT_NAME}"
+    ports:
+      - "${HOST_APP_PORT}:${DOCKER_EXPOSE_PORT}"
+    networks:
+      - app-network
+    restart: always
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - CONTAINER_NAME=${APP_NAME}
+    # 可选：添加健康检查
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:${DOCKER_EXPOSE_PORT}/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    # 日志驱动配置（移除path，保留滚动策略）
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"   # 单个日志文件最大100MB
+        max-file: "10"     # 最多保留10个日志文件
+    # 关键：用数据卷映射日志目录到宿主机自定义路径
+    volumes:
+      - D:/tmp/app-logs/${PROJECT_NAME}/${COMPOSE_PROJECT_NAME}/${APP_NAME}:/app/logs
+
+networks:
+  app-network:
+    name: ${NETWORK_NAME}
+    external: true
+    driver: bridge

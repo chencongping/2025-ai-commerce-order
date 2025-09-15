@@ -1,0 +1,1 @@
+mvn clean package -DskipTests && docker-compose -f ./deploy/docker-compose.yml up -d --build --force-recreate

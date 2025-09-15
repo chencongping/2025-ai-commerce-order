@@ -1,0 +1,27 @@
+name: Rename Artifact ID
+on:
+  repository_dispatch:
+    types: [rename-artifact]
+
+jobs:
+  rename:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Replace artifactId
+        run: |
+          NEW_ARTIFACT_ID=$(basename "$GITHUB_REPOSITORY")
+          echo "New artifact ID: $NEW_ARTIFACT_ID"
+          sed -i 's/__REPO_NAME__/'"$NEW_ARTIFACT_ID"'/g' pom.xml
+          echo "Modified pom.xml content:"
+          cat pom.xml
+
+      - name: Commit changes
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "noreply@github.com"
+          git add pom.xml
+          git commit -m "Auto-rename artifactId to $NEW_ARTIFACT_ID"
+          git push

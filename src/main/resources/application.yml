@@ -1,0 +1,43 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: 2025_ai_agent_microservice_template_docker_compose_3_5_4
+
+springdoc:
+  swagger-ui:
+    path: /
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics,env,beans,configprops  # 暴露所有需要的端点
+      base-path: /actuator  # 基础路径
+  endpoint:
+    prometheus:
+      enabled: true
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    tags:
+      application: ${spring.application.name} # 给指标添加服务名称标签，方便多服务区分
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true  # 启用请求延迟直方图
+
+logging:
+  file:
+    name: /app/logs/app.log  # 容器内日志文件路径
+  level:
+    root: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"  # 控制台日志格式
+
+
