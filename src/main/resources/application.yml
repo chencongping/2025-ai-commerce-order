@@ -2,7 +2,7 @@ server:
   port: 8080
 spring:
   application:
-    name: 2025_ai_agent_microservice_template_docker_compose_3_5_4
+    name: 2025-ai-commerce-order
 
 springdoc:
   swagger-ui:

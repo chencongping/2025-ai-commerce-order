@@ -1,3 +1,5 @@
 logging:
   file:
     enabled: true  # 关闭文件输出，仅输出到控制台
+server:
+  port: 8071
