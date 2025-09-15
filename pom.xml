@@ -71,11 +71,6 @@
             <groupId>io.prometheus</groupId>
             <artifactId>simpleclient</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.datastax.oss</groupId>
-            <artifactId>java-driver-core</artifactId>
-            <version>4.15.0</version>
-        </dependency>
     </dependencies>
     <!-- Spring Boot Actuator（暴露指标端点） -->
 
