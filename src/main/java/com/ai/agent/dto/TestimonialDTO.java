@@ -4,9 +4,7 @@ import com.ai.agent.entity.Testimonial;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
 
-@Data
 public class TestimonialDTO {
     
     private Long id;
@@ -24,6 +22,55 @@ public class TestimonialDTO {
     private String comment;
     
     private String product;
+    
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+    
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    public String getAvatar() {
+        return avatar;
+    }
+    
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+    
+    public Integer getRating() {
+        return rating;
+    }
+    
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
+    
+    public String getComment() {
+        return comment;
+    }
+    
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+    
+    public String getProduct() {
+        return product;
+    }
+    
+    public void setProduct(String product) {
+        this.product = product;
+    }
     
     // 转换为实体
     public Testimonial toEntity() {

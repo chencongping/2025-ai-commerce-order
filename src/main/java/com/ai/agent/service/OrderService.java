@@ -2,10 +2,19 @@ package com.ai.agent.service;
 
 import com.ai.agent.dto.OrderDTO;
 import com.ai.agent.dto.OrderItemDTO;
-import com.ai.agent.entity.*;
-import com.ai.agent.repository.*;
+import com.ai.agent.entity.Customer;
+import com.ai.agent.entity.Order;
+import com.ai.agent.entity.OrderItem;
+import com.ai.agent.entity.Product;
+import com.ai.agent.repository.CustomerRepository;
+import com.ai.agent.repository.OrderItemRepository;
+import com.ai.agent.repository.OrderRepository;
+import com.ai.agent.repository.ProductRepository;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,9 +27,14 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 @Transactional
+@CircuitBreaker(name = "orderService", fallbackMethod = "fallback")
+@Retry(name = "orderService", fallbackMethod = "fallback")
 public class OrderService {
+    
+    private static final Logger log = LoggerFactory.getLogger(OrderService.class);
+    
+    private final Resilience4jFallbackService fallbackService;
     
     private final OrderRepository orderRepository;
     private final CustomerRepository customerRepository;
@@ -210,4 +224,33 @@ public class OrderService {
         orderRepository.delete(order);
         log.info("Order deleted successfully");
     }
+    
+    // Fallback methods
+    public List<OrderDTO> fallback(Throwable throwable) {
+        return fallbackService.getAllOrdersFallback(throwable);
+    }
+    
+//    public Optional<OrderDTO> fallback(Long id, Throwable throwable) {
+//        return fallbackService.getOrderByIdFallback(id, throwable);
+//    }
+    
+    public Optional<OrderDTO> fallback(String orderNumber, Throwable throwable) {
+        return fallbackService.getOrderByOrderNumberFallback(orderNumber, throwable);
+    }
+    
+    public List<OrderDTO> fallback(Long customerId, Throwable throwable) {
+        return fallbackService.getOrdersByCustomerFallback(customerId, throwable);
+    }
+    
+    public OrderDTO fallback(OrderDTO orderDTO, Throwable throwable) {
+        return fallbackService.createOrderFallback(orderDTO, throwable);
+    }
+    
+    public OrderDTO fallback(Long id, OrderDTO orderDTO, Throwable throwable) {
+        return fallbackService.updateOrderFallback(id, orderDTO, throwable);
+    }
+    
+//    public void fallback(Long id, Throwable throwable) {
+//        fallbackService.deleteOrderFallback(id, throwable);
+//    }
 }

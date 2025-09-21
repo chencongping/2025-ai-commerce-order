@@ -2,9 +2,7 @@ package com.ai.agent.dto;
 
 import com.ai.agent.entity.Category;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
 
-@Data
 public class CategoryDTO {
     
     private Long id;
@@ -17,6 +15,47 @@ public class CategoryDTO {
     private String imageUrl;
     
     private Integer count;
+    
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+    
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    public String getIcon() {
+        return icon;
+    }
+    
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+    
+    public String getImageUrl() {
+        return imageUrl;
+    }
+    
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+    
+    public Integer getCount() {
+        return count;
+    }
+    
+    public void setCount(Integer count) {
+        this.count = count;
+    }
     
     // 转换为实体
     public Category toEntity() {

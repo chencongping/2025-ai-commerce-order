@@ -3,8 +3,11 @@ package com.ai.agent.service;
 import com.ai.agent.dto.ProductDTO;
 import com.ai.agent.entity.Product;
 import com.ai.agent.repository.ProductRepository;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,9 +17,12 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 @Transactional
+@CircuitBreaker(name = "productService")
+@Retry(name = "productService")
 public class ProductService {
+    
+    private static final Logger log = LoggerFactory.getLogger(ProductService.class);
     
     private final ProductRepository productRepository;
     

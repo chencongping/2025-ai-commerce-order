@@ -3,8 +3,11 @@ package com.ai.agent.service;
 import com.ai.agent.dto.CustomerDTO;
 import com.ai.agent.entity.Customer;
 import com.ai.agent.repository.CustomerRepository;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,9 +17,14 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 @Transactional
+@CircuitBreaker(name = "customerService", fallbackMethod = "fallback")
+@Retry(name = "customerService", fallbackMethod = "fallback")
 public class CustomerService {
+    
+    private static final Logger log = LoggerFactory.getLogger(CustomerService.class);
+    
+    private final Resilience4jFallbackService fallbackService;
     
     private final CustomerRepository customerRepository;
     
@@ -109,4 +117,33 @@ public class CustomerService {
         customerRepository.delete(customer);
         log.info("Customer deleted successfully");
     }
+    
+    // Fallback methods
+    public List<CustomerDTO> fallback(Throwable throwable) {
+        return fallbackService.getAllCustomersFallback(throwable);
+    }
+    
+    public Optional<CustomerDTO> fallback(Long id, Throwable throwable) {
+        return fallbackService.getCustomerByIdFallback(id, throwable);
+    }
+    
+    public Optional<CustomerDTO> fallback(String email, Throwable throwable) {
+        return fallbackService.getCustomerByEmailFallback(email, throwable);
+    }
+    
+//    public List<CustomerDTO> fallback(String keyword, Throwable throwable) {
+//        return fallbackService.searchCustomersFallback(keyword, throwable);
+//    }
+    
+    public CustomerDTO fallback(CustomerDTO customerDTO, Throwable throwable) {
+        return fallbackService.createCustomerFallback(customerDTO, throwable);
+    }
+    
+    public CustomerDTO fallback(Long id, CustomerDTO customerDTO, Throwable throwable) {
+        return fallbackService.updateCustomerFallback(id, customerDTO, throwable);
+    }
+    
+//    public void fallback(Long id, Throwable throwable) {
+//        fallbackService.deleteCustomerFallback(id, throwable);
+//    }
 }

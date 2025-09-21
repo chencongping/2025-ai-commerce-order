@@ -4,18 +4,12 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
-@ToString(exclude = "orders")
 @Entity
 @Table(name = "customers")
-@EqualsAndHashCode(callSuper = true)
 public class Customer extends BaseEntity {
     
     @NotBlank(message = "客户姓名不能为空")
@@ -39,6 +33,68 @@ public class Customer extends BaseEntity {
     
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Order> orders = new ArrayList<>();
+    
+    public String getName() {
+        return name;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    public String getEmail() {
+        return email;
+    }
+    
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+    public String getPhone() {
+        return phone;
+    }
+    
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+    
+    public String getAddress() {
+        return address;
+    }
+    
+    public void setAddress(String address) {
+        this.address = address;
+    }
+    
+    public CustomerStatus getStatus() {
+        return status;
+    }
+    
+    public void setStatus(CustomerStatus status) {
+        this.status = status;
+    }
+    
+    public List<Order> getOrders() {
+        return orders;
+    }
+    
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+    
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + getId() +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                ", status=" + status +
+                ", createdAt=" + getCreatedAt() +
+                ", updatedAt=" + getUpdatedAt() +
+                '}';
+    }
     
     public enum CustomerStatus {
         ACTIVE, INACTIVE, SUSPENDED

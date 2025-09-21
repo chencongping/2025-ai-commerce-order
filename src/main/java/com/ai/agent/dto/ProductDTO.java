@@ -5,11 +5,9 @@ import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
 
 import java.math.BigDecimal;
 
-@Data
 public class ProductDTO {
     
     private Long id;
@@ -45,6 +43,126 @@ public class ProductDTO {
     private Boolean isNew;
     
     private Boolean isBestseller;
+    
+    public Long getId() {
+        return id;
+    }
+    
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    public String getDescription() {
+        return description;
+    }
+    
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
+    public BigDecimal getPrice() {
+        return price;
+    }
+    
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+    
+    public String getSku() {
+        return sku;
+    }
+    
+    public void setSku(String sku) {
+        this.sku = sku;
+    }
+    
+    public Integer getStockQuantity() {
+        return stockQuantity;
+    }
+    
+    public void setStockQuantity(Integer stockQuantity) {
+        this.stockQuantity = stockQuantity;
+    }
+    
+    public Product.ProductStatus getStatus() {
+        return status;
+    }
+    
+    public void setStatus(Product.ProductStatus status) {
+        this.status = status;
+    }
+    
+    public String getCategory() {
+        return category;
+    }
+    
+    public void setCategory(String category) {
+        this.category = category;
+    }
+    
+    public BigDecimal getOriginalPrice() {
+        return originalPrice;
+    }
+    
+    public void setOriginalPrice(BigDecimal originalPrice) {
+        this.originalPrice = originalPrice;
+    }
+    
+    public BigDecimal getRating() {
+        return rating;
+    }
+    
+    public void setRating(BigDecimal rating) {
+        this.rating = rating;
+    }
+    
+    public Integer getReviewCount() {
+        return reviewCount;
+    }
+    
+    public void setReviewCount(Integer reviewCount) {
+        this.reviewCount = reviewCount;
+    }
+    
+    public String getImageUrl() {
+        return imageUrl;
+    }
+    
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+    
+    public String getTags() {
+        return tags;
+    }
+    
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+    
+    public Boolean getIsNew() {
+        return isNew;
+    }
+    
+    public void setIsNew(Boolean aNew) {
+        isNew = aNew;
+    }
+    
+    public Boolean getIsBestseller() {
+        return isBestseller;
+    }
+    
+    public void setIsBestseller(Boolean bestseller) {
+        isBestseller = bestseller;
+    }
     
     // 转换为实体
     public Product toEntity() {

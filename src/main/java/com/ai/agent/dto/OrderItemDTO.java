@@ -4,11 +4,9 @@ import com.ai.agent.entity.OrderItem;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
 
 import java.math.BigDecimal;
 
-@Data
 public class OrderItemDTO {
     
     private Long id;
@@ -21,6 +19,39 @@ public class OrderItemDTO {
     
     @DecimalMin(value = "0.0", inclusive = false, message = "商品价格必须大于0")
     private BigDecimal price;
+    
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+    
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
+    public Long getProductId() {
+        return productId;
+    }
+    
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+    
+    public Integer getQuantity() {
+        return quantity;
+    }
+    
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+    
+    public BigDecimal getPrice() {
+        return price;
+    }
+    
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
     
     // 转换为实体
     public OrderItem toEntity() {

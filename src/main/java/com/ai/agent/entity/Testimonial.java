@@ -4,10 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@Data
 @Entity
 @Table(name = "testimonials")
 @EqualsAndHashCode(callSuper = true)
@@ -31,4 +29,45 @@ public class Testimonial extends BaseEntity {
     
     @Column(name = "product")
     private String product;
+    
+    // Getters and Setters
+    public String getName() {
+        return name;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    public String getAvatar() {
+        return avatar;
+    }
+    
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+    
+    public Integer getRating() {
+        return rating;
+    }
+    
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
+    
+    public String getComment() {
+        return comment;
+    }
+    
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+    
+    public String getProduct() {
+        return product;
+    }
+    
+    public void setProduct(String product) {
+        this.product = product;
+    }
 }

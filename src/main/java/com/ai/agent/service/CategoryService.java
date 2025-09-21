@@ -1,10 +1,13 @@
 package com.ai.agent.service;
 
 import com.ai.agent.dto.CategoryDTO;
-import com.ai.agent.entity.Category;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 
 import java.util.List;
 
+@CircuitBreaker(name = "categoryService")
+@Retry(name = "categoryService")
 public interface CategoryService {
     
     // 获取所有分类

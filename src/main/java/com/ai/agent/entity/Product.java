@@ -4,17 +4,13 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
 @Entity
 @Table(name = "products")
-@EqualsAndHashCode(callSuper = true)
 public class Product extends BaseEntity {
     
     @NotBlank(message = "商品名称不能为空")
@@ -65,6 +61,126 @@ public class Product extends BaseEntity {
     
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrderItem> orderItems = new ArrayList<>();
+    
+    public String getName() {
+        return name;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    public String getDescription() {
+        return description;
+    }
+    
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
+    public BigDecimal getPrice() {
+        return price;
+    }
+    
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+    
+    public String getSku() {
+        return sku;
+    }
+    
+    public void setSku(String sku) {
+        this.sku = sku;
+    }
+    
+    public Integer getStockQuantity() {
+        return stockQuantity;
+    }
+    
+    public void setStockQuantity(Integer stockQuantity) {
+        this.stockQuantity = stockQuantity;
+    }
+    
+    public ProductStatus getStatus() {
+        return status;
+    }
+    
+    public void setStatus(ProductStatus status) {
+        this.status = status;
+    }
+    
+    public String getCategory() {
+        return category;
+    }
+    
+    public void setCategory(String category) {
+        this.category = category;
+    }
+    
+    public BigDecimal getOriginalPrice() {
+        return originalPrice;
+    }
+    
+    public void setOriginalPrice(BigDecimal originalPrice) {
+        this.originalPrice = originalPrice;
+    }
+    
+    public BigDecimal getRating() {
+        return rating;
+    }
+    
+    public void setRating(BigDecimal rating) {
+        this.rating = rating;
+    }
+    
+    public Integer getReviewCount() {
+        return reviewCount;
+    }
+    
+    public void setReviewCount(Integer reviewCount) {
+        this.reviewCount = reviewCount;
+    }
+    
+    public String getImageUrl() {
+        return imageUrl;
+    }
+    
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+    
+    public String getTags() {
+        return tags;
+    }
+    
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+    
+    public Boolean getIsNew() {
+        return isNew;
+    }
+    
+    public void setIsNew(Boolean aNew) {
+        isNew = aNew;
+    }
+    
+    public Boolean getIsBestseller() {
+        return isBestseller;
+    }
+    
+    public void setIsBestseller(Boolean bestseller) {
+        isBestseller = bestseller;
+    }
+    
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+    
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
     
     public enum ProductStatus {
         ACTIVE, INACTIVE, OUT_OF_STOCK

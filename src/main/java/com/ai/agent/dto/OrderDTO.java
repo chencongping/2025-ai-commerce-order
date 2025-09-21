@@ -3,12 +3,10 @@ package com.ai.agent.dto;
 import com.ai.agent.entity.Order;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-@Data
 public class OrderDTO {
     
     private Long id;
@@ -24,6 +22,70 @@ public class OrderDTO {
     
     @Valid
     private List<OrderItemDTO> orderItems;
+    
+    public Long getId() {
+        return id;
+    }
+    
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
+    public String getOrderNumber() {
+        return orderNumber;
+    }
+    
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber;
+    }
+    
+    public Long getCustomerId() {
+        return customerId;
+    }
+    
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
+    }
+    
+    public Order.OrderStatus getStatus() {
+        return status;
+    }
+    
+    public void setStatus(Order.OrderStatus status) {
+        this.status = status;
+    }
+    
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
+    }
+    
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+    
+    public String getShippingAddress() {
+        return shippingAddress;
+    }
+    
+    public void setShippingAddress(String shippingAddress) {
+        this.shippingAddress = shippingAddress;
+    }
+    
+    public String getNotes() {
+        return notes;
+    }
+    
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+    
+    public List<OrderItemDTO> getOrderItems() {
+        return orderItems;
+    }
+    
+    public void setOrderItems(List<OrderItemDTO> orderItems) {
+        this.orderItems = orderItems;
+    }
     
     // 转换为实体
     public Order toEntity() {
