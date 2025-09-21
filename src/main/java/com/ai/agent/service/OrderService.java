@@ -38,7 +38,8 @@ public class OrderService {
         Order order = orderDTO.toEntity();
         order.setCustomer(customer);
         order.setOrderNumber(generateOrderNumber());
-        
+        // 打印订单所有的信息
+        log.info("Order details: {}", order);
         // 保存订单
         Order savedOrder = orderRepository.save(order);
         

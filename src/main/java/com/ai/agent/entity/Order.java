@@ -5,12 +5,14 @@ import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@ToString(exclude = {"customer", "orderItems"})
 @Entity
 @Table(name = "orders")
 @EqualsAndHashCode(callSuper = true)
