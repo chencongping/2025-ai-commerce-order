@@ -19,8 +19,8 @@ public class CorsConfig implements WebMvcConfigurer {
             public void addCorsMappings(CorsRegistry registry) {
                 // 允许所有路径（包括Swagger）跨域，生产环境可缩小范围
                 registry.addMapping("/**")
-                        // 允许的前端域名/端口，生产环境需指定具体域名（如"http://your-frontend.com"）
-                        .allowedOrigins("http://localhost:3000")
+                        // 允许的前端域名/端口，生产环境需指定具体域名
+                        .allowedOrigins("http://localhost:3000", "http://localhost:3002", "http://192.168.50.126:3002")
                         // 允许的请求方法
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         // 允许的请求头
