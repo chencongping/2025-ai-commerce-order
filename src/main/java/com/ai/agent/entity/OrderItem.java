@@ -1,0 +1,40 @@
+package com.ai.agent.entity;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import java.math.BigDecimal;
+
+@Data
+@Entity
+@Table(name = "order_items")
+@EqualsAndHashCode(callSuper = true)
+public class OrderItem extends BaseEntity {
+    
+    @NotNull(message = "订单不能为空")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id", nullable = false)
+    private Order order;
+    
+    @NotNull(message = "商品不能为空")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
+    
+    @Min(value = 1, message = "商品数量必须大于0")
+    @Column(name = "quantity", nullable = false)
+    private Integer quantity;
+    
+    @DecimalMin(value = "0.0", inclusive = false, message = "商品价格必须大于0")
+    @Column(name = "price", nullable = false, precision = 10, scale = 2)
+    private BigDecimal price;
+    
+    // 计算小计
+    public BigDecimal getSubtotal() {
+        return price.multiply(BigDecimal.valueOf(quantity));
+    }
+}
