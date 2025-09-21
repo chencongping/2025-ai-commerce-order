@@ -1,6 +1,4 @@
 spring:
-  profiles:
-    active: dev
   # 开发环境数据库配置
   datasource:
     url: jdbc:mysql://2025_ai_agent_infrastructure_mysql:3306/ai_commerce_order?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=utf8
