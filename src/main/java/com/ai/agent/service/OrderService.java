@@ -55,8 +55,8 @@ public class OrderService {
         // 更新订单总金额
         savedOrder.setTotalAmount(totalAmount);
         Order finalOrder = orderRepository.save(savedOrder);
-        
-        log.info("Order created successfully with order number: {}", finalOrder.getOrderNumber());
+        // 打印订单信息
+        log.info("Order details: {}", finalOrder);
         return OrderDTO.fromEntity(finalOrder);
     }
     
