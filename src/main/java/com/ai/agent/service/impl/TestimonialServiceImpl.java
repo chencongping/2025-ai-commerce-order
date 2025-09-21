@@ -8,14 +8,13 @@ import com.ai.agent.service.TestimonialService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Service
 @RequiredArgsConstructor
@@ -56,6 +55,8 @@ public class TestimonialServiceImpl implements TestimonialService {
     public List<TestimonialDTO> fallback(Integer rating, Exception e) {
         return fallbackService.handleTestimonialsByMinRatingFallback(rating, e);
     }
+    
+
     
     @Override
     public List<TestimonialDTO> getAllTestimonials() {
@@ -118,10 +119,17 @@ public class TestimonialServiceImpl implements TestimonialService {
     
     @Override
     @Transactional(readOnly = true)
+    @CircuitBreaker(name = "testimonialService", fallbackMethod = "getLatestTestimonialsFallback")
+    @Retry(name = "testimonialService", fallbackMethod = "getLatestTestimonialsFallback")
     public List<TestimonialDTO> getLatestTestimonials(Integer limit) {
         log.info("获取最新的 {} 条评价", limit);
         return testimonialRepository.findLatestTestimonials(limit).stream()
                 .map(TestimonialDTO::fromEntity)
                 .collect(Collectors.toList());
+    }
+    
+    // 专门针对getLatestTestimonials方法的fallback
+    public List<TestimonialDTO> getLatestTestimonialsFallback(Integer limit, Exception e) {
+        return fallbackService.handleTestimonialFallback(e);
     }
 }
