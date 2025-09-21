@@ -11,7 +11,7 @@ services:
       - app-network
     restart: always
     environment:
-      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE}
       - CONTAINER_NAME=${APP_NAME}
     # 可选：添加健康检查
     healthcheck:
