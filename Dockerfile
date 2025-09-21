@@ -15,7 +15,7 @@ COPY target/*.jar /app.jar
 EXPOSE 8080
 
 # 配置Java日志输出到标准输出，便于Docker收集
-ENV JAVA_OPTS="-Dlogback.configurationFile=/logback.xml -Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager"
+#ENV JAVA_OPTS="-Dlogback.configurationFile=/logback.xml -Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager"
 
 # 健康检查（根据应用实际情况调整检查路径和频率）
 HEALTHCHECK --interval=30s --timeout=3s --retries=3 \
