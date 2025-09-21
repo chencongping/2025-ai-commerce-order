@@ -31,6 +31,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query("SELECT COUNT(o) FROM Order o WHERE o.status = :status")
     Long countByStatus(@Param("status") Order.OrderStatus status);
     
-    @Query("SELECT SUM(o.totalAmount) FROM Order o WHERE o.status = 'DELIVERED' AND o.createdAt BETWEEN :startDate AND :endDate")
+    @Query("SELECT SUM(o.totalAmount) FROM Order o WHERE o.status = com.ai.agent.entity.Order.OrderStatus.DELIVERED AND o.createdAt BETWEEN :startDate AND :endDate")
     Double getTotalRevenueByDateRange(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 }

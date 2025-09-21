@@ -32,12 +32,33 @@ public class ProductDTO {
     
     private String category;
     
+    private BigDecimal originalPrice;
+    
+    private BigDecimal rating;
+    
+    private Integer reviewCount;
+    
+    private String imageUrl;
+    
+    private String tags;
+    
+    private Boolean isNew;
+    
+    private Boolean isBestseller;
+    
     // 转换为实体
     public Product toEntity() {
         Product product = new Product();
         product.setName(this.name);
         product.setDescription(this.description);
         product.setPrice(this.price);
+        product.setOriginalPrice(this.originalPrice);
+        product.setRating(this.rating);
+        product.setReviewCount(this.reviewCount != null ? this.reviewCount : 0);
+        product.setImageUrl(this.imageUrl);
+        product.setTags(this.tags);
+        product.setIsNew(this.isNew != null ? this.isNew : false);
+        product.setIsBestseller(this.isBestseller != null ? this.isBestseller : false);
         product.setSku(this.sku);
         product.setStockQuantity(this.stockQuantity != null ? this.stockQuantity : 0);
         product.setStatus(this.status != null ? this.status : Product.ProductStatus.ACTIVE);
@@ -52,6 +73,13 @@ public class ProductDTO {
         dto.setName(product.getName());
         dto.setDescription(product.getDescription());
         dto.setPrice(product.getPrice());
+        dto.setOriginalPrice(product.getOriginalPrice());
+        dto.setRating(product.getRating());
+        dto.setReviewCount(product.getReviewCount());
+        dto.setImageUrl(product.getImageUrl());
+        dto.setTags(product.getTags());
+        dto.setIsNew(product.getIsNew());
+        dto.setIsBestseller(product.getIsBestseller());
         dto.setSku(product.getSku());
         dto.setStockQuantity(product.getStockQuantity());
         dto.setStatus(product.getStatus());

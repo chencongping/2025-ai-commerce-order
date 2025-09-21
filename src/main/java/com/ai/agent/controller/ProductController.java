@@ -124,4 +124,29 @@ public class ProductController {
         productService.deleteProduct(id);
         return ResponseEntity.ok(ApiResponse.success("商品删除成功", null));
     }
+    
+    @GetMapping("/new")
+    @Operation(summary = "获取新商品", description = "获取新上架的商品列表")
+    public ResponseEntity<ApiResponse<List<ProductDTO>>> getNewProducts() {
+        log.info("Fetching new products");
+        List<ProductDTO> products = productService.getNewProducts();
+        return ResponseEntity.ok(ApiResponse.success("获取新商品成功", products));
+    }
+    
+    @GetMapping("/bestsellers")
+    @Operation(summary = "获取畅销商品", description = "获取畅销商品列表")
+    public ResponseEntity<ApiResponse<List<ProductDTO>>> getBestsellerProducts() {
+        log.info("Fetching bestseller products");
+        List<ProductDTO> products = productService.getBestsellerProducts();
+        return ResponseEntity.ok(ApiResponse.success("获取畅销商品成功", products));
+    }
+    
+    @GetMapping("/top-rated")
+    @Operation(summary = "获取评分最高商品", description = "获取评分最高的商品列表")
+    public ResponseEntity<ApiResponse<List<ProductDTO>>> getTopRatedProducts(
+            @Parameter(description = "返回商品数量限制") @RequestParam(defaultValue = "10") int limit) {
+        log.info("Fetching top rated products with limit: {}", limit);
+        List<ProductDTO> products = productService.getTopRatedProducts(limit);
+        return ResponseEntity.ok(ApiResponse.success("获取评分最高商品成功", products));
+    }
 }

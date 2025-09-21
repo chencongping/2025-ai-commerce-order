@@ -60,7 +60,7 @@ public class ProductService {
     @Transactional(readOnly = true)
     public List<ProductDTO> getAvailableProducts() {
         log.info("Fetching available products");
-        return productRepository.findAvailableProducts().stream()
+        return productRepository.findByStockQuantityGreaterThanAndStatus(0, Product.ProductStatus.ACTIVE).stream()
                 .map(ProductDTO::fromEntity)
                 .collect(Collectors.toList());
     }
@@ -68,7 +68,7 @@ public class ProductService {
     @Transactional(readOnly = true)
     public List<ProductDTO> searchProducts(String keyword) {
         log.info("Searching products with keyword: {}", keyword);
-        return productRepository.searchProducts(keyword).stream()
+        return productRepository.findByNameContainingOrDescriptionContainingOrCategoryContaining(keyword, keyword, keyword).stream()
                 .map(ProductDTO::fromEntity)
                 .collect(Collectors.toList());
     }
@@ -146,5 +146,29 @@ public class ProductService {
         
         productRepository.delete(product);
         log.info("Product deleted successfully");
+    }
+    
+    @Transactional(readOnly = true)
+    public List<ProductDTO> getNewProducts() {
+        log.info("Fetching new products");
+        return productRepository.findByIsNewTrueAndStatus(Product.ProductStatus.ACTIVE).stream()
+                .map(ProductDTO::fromEntity)
+                .collect(Collectors.toList());
+    }
+    
+    @Transactional(readOnly = true)
+    public List<ProductDTO> getBestsellerProducts() {
+        log.info("Fetching bestseller products");
+        return productRepository.findByIsBestsellerTrueAndStatus(Product.ProductStatus.ACTIVE).stream()
+                .map(ProductDTO::fromEntity)
+                .collect(Collectors.toList());
+    }
+    
+    @Transactional(readOnly = true)
+    public List<ProductDTO> getTopRatedProducts(int limit) {
+        log.info("Fetching top rated products with limit: {}", limit);
+        return productRepository.findTop5ByStatusOrderByRatingDesc(Product.ProductStatus.ACTIVE).stream()
+                .map(ProductDTO::fromEntity)
+                .collect(Collectors.toList());
     }
 }

@@ -42,6 +42,27 @@ public class Product extends BaseEntity {
     @Column(name = "category")
     private String category;
     
+    @Column(name = "original_price", precision = 10, scale = 2)
+    private BigDecimal originalPrice;
+    
+    @Column(name = "rating", precision = 3, scale = 2)
+    private BigDecimal rating;
+    
+    @Column(name = "review_count")
+    private Integer reviewCount = 0;
+    
+    @Column(name = "image_url")
+    private String imageUrl;
+    
+    @Column(name = "tags")
+    private String tags;
+    
+    @Column(name = "is_new")
+    private Boolean isNew = false;
+    
+    @Column(name = "is_bestseller")
+    private Boolean isBestseller = false;
+    
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrderItem> orderItems = new ArrayList<>();
     

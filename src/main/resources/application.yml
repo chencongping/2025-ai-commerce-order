@@ -11,14 +11,14 @@ spring:
     password: 123456
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: none
     show-sql: true
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
         format_sql: true
         hbm2ddl:
-          auto: validate
+          auto: none
 
 springdoc:
   swagger-ui:
